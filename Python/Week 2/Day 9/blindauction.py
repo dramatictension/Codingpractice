@@ -2,8 +2,6 @@
 
 #Import os to be able to call the command cls to clear the terminal
 import os
-#Set a flag for the purpose of looping
-morebidders = True
 #Create empty dictionary for the purpose of collecting bidder names and bid amounts as keys and values
 bidderdict = {}
 
@@ -12,14 +10,17 @@ def bid():
 
     print("Welcome to the blind auction!")
     bidder_name = input("What's your name?\n")
-    bid_amount = int(input("What's your bid amount in dollars?\n"))
+    while True:
+        try:
+            bid_amount = int(input("What's your bid amount in dollars?\n"))
+            break
+        except ValueError:
+            print("Please enter a number!")
     #Add to the dictionary. [key] = amount bid
     bidderdict[bidder_name] = bid_amount
 
-
-
 #Call bid, ask if there are more keys to be added to the dictionary. If not, flip the morebidders flag to False to end the loop.       
-while morebidders == True:
+while True:
     bid()
     print("Are there still other bidders? Type Y or N")
     add_bid = input("").lower()
@@ -29,8 +30,8 @@ while morebidders == True:
     if add_bid == "y":
         os.system('cls')
     elif add_bid == "n":
-        morebidders = False
         os.system('cls')
+        break
 
 #Set new vars to replace with names and bid amounts
 current_highest_bid = 0
