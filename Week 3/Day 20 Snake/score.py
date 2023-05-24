@@ -1,29 +1,45 @@
 import turtle
 
 TEXTSIZE = 20
+FONT = ("Courier", 18, "normal")
+
+with open("Week 3\Day 20 Snake\hiscore.txt", mode="r") as hiscoredata:
+    hiscore = hiscoredata.read()
 
 
 class Score(turtle.Turtle):
     def __init__(self):
         super().__init__()
+        self.hiscore = hiscore
         self.score = 0
         self.hideturtle()
-        self.penup
+        self.penup()
         self.color("white")
-        self.penup
-        self.goto(-60, 250)
+        self.goto(-150, 230)
         self.clear()
         self.write(
-            f"Score = {self.score}", align="left", font=("Arial", TEXTSIZE, "normal")
+            f"Score: {self.score} High Score: {self.hiscore}",
+            align="left",
+            font=(FONT),
         )
 
-    def gain_score(self):
+    def reset(self):
+        if self.score > int(self.hiscore):
+            self.hiscore = self.score
+            self.update_scoreboard()
+            self.save_newhiscore()
+        self.score = 0
+
+    #        self.write("Game Over.", align="center", font=(FONT))
+
+    def update_scoreboard(self):
+        self.clear()
+        self.write(f"Score: {self.score} High Score: {self.hiscore}", font=FONT)
+
+    def save_newhiscore(self):
+        with open("Week 3\Day 20 Snake\hiscore.txt", mode="w") as hiscoredata:
+            hiscoredata.write(str(self.hiscore))
+
+    def increase_score(self):
         self.score += 1
-        self.clear()
-        self.write(
-            f"Score = {self.score}", align="left", font=("Arial", TEXTSIZE, "normal")
-        )
-
-    def game_over(self):
-        self.goto(0, 0)
-        self.write("Game Over.", align="center", font=("Arial", TEXTSIZE, "normal"))
+        self.update_scoreboard()

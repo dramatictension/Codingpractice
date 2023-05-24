@@ -25,7 +25,7 @@ while ongoing:
     time.sleep(0.07)
     snek.move()
     if snek.head.distance(food) < 15:
-        score.gain_score()
+        score.increase_score()
         food.reroll()
         snek.extend()
     if (
@@ -34,12 +34,14 @@ while ongoing:
         or snek.head.ycor() > 300
         or snek.head.ycor() < -300
     ):
-        ongoing = False
-        score.game_over()
+        score.reset()
+        snek.reset()
+        snek.move()
 
     for segment in snek.snake_body[1:]:
         if snek.head.distance(segment) < 10:
-            ongoing = False
-            score.game_over()
+            score.reset()
+            snek.reset()
+            snek.move()
 
 screen.exitonclick()
